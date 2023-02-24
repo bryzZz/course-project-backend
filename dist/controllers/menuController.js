@@ -22,8 +22,8 @@ class MenuController {
                 if (!errors.isEmpty()) {
                     return next(ApiError_1.ApiError.BadRequest("Validation error", errors.array()));
                 }
-                const { title } = req.body;
-                const menu = yield menuService_1.menuService.createMenu((_a = req.user) === null || _a === void 0 ? void 0 : _a.id, title);
+                const { title, description, image } = req.body;
+                const menu = yield menuService_1.menuService.createMenu((_a = req.user) === null || _a === void 0 ? void 0 : _a.id, title, description, image);
                 res.json(menu);
             }
             catch (error) {

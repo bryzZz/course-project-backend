@@ -54,7 +54,7 @@ class TokenService {
                     data: { id: jti, token: refreshToken },
                 });
             }
-            console.log("save Token", jti);
+            // console.log("save Token", jti);
             const token = yield prisma_1.default.refreshToken.create({
                 data: { id: jti, token: refreshToken, userId },
             });
@@ -64,7 +64,7 @@ class TokenService {
     removeToken(refreshToken) {
         return __awaiter(this, void 0, void 0, function* () {
             const payload = jsonwebtoken_1.default.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-            console.log("PAYLOAD===========", payload);
+            // console.log("PAYLOAD===========", payload);
             const tokenData = yield prisma_1.default.refreshToken.delete({
                 where: { id: payload.jti },
             });

@@ -62,7 +62,7 @@ class TokenService {
       });
     }
 
-    console.log("save Token", jti);
+    // console.log("save Token", jti);
 
     const token = await prisma.refreshToken.create({
       data: { id: jti, token: refreshToken, userId },
@@ -77,7 +77,7 @@ class TokenService {
       process.env.JWT_REFRESH_SECRET as string
     ) as jwt.JwtPayload;
 
-    console.log("PAYLOAD===========", payload);
+    // console.log("PAYLOAD===========", payload);
 
     const tokenData = await prisma.refreshToken.delete({
       where: { id: payload.jti as string },

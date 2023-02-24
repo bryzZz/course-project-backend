@@ -69,7 +69,7 @@ class UserService {
       throw ApiError.Unauthorized();
     }
 
-    console.log("==============", userData);
+    // console.log("==============", userData);
 
     const tokenFromDb = await tokenService.findToken(userData?.jti);
 

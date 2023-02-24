@@ -14,15 +14,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.menuService = void 0;
 const prisma_1 = __importDefault(require("../utils/prisma"));
+const imagesService_1 = require("./imagesService");
 class MenuService {
-    createMenu(userId, title) {
+    createMenu(userId, title, description, image) {
         return __awaiter(this, void 0, void 0, function* () {
-            const menu = yield prisma_1.default.menu.create({
-                data: {
-                    userId,
-                    title,
-                },
-            });
+            const data = {
+                userId,
+                title,
+                description,
+            };
+            if (image) {
+                const imageUrl = yield imagesService_1.imagesService.upload(image, `${title}-avatar`);
+                data["imageUrl"] = imageUrl;
+            }
+            const menu = yield prisma_1.default.menu.create({ data });
             return menu;
         });
     }

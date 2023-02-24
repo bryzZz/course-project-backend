@@ -73,7 +73,7 @@ class UserService {
             if (!userData) {
                 throw ApiError_1.ApiError.Unauthorized();
             }
-            console.log("==============", userData);
+            // console.log("==============", userData);
             const tokenFromDb = yield tokenService_1.tokenService.findToken(userData === null || userData === void 0 ? void 0 : userData.jti);
             if (!tokenFromDb) {
                 throw ApiError_1.ApiError.Unauthorized();

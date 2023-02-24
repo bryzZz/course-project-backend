@@ -14,9 +14,14 @@ class MenuController {
         return next(ApiError.BadRequest("Validation error", errors.array()));
       }
 
-      const { title } = req.body;
+      const { title, description, image } = req.body;
 
-      const menu = await menuService.createMenu(req.user?.id as string, title);
+      const menu = await menuService.createMenu(
+        req.user?.id as string,
+        title,
+        description,
+        image
+      );
 
       res.json(menu);
     } catch (error) {
