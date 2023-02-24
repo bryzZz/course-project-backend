@@ -47,6 +47,7 @@ model Menu {
 model Block {
   id        String   @id @unique @default(uuid())
   place     Int
+  imageUrl  String?
   text      String
   menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
   menuId    String

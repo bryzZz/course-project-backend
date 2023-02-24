@@ -16,7 +16,7 @@ class MenuController {
 
       const { title, description, image } = req.body;
 
-      const menu = await menuService.createMenu(
+      const menu = await menuService.create(
         req.user?.id as string,
         title,
         description,
@@ -31,9 +31,18 @@ class MenuController {
 
   async get(req: RequestWithUser, res: Response, next: NextFunction) {
     try {
-      const menus = await menuService.get(req.user?.id as string);
+      const userId = req.user?.id as string;
+      const { id } = req.query;
 
-      res.json(menus);
+      if (id && typeof id === "string") {
+        const menu = await menuService.get(userId, id);
+
+        return res.json(menu);
+      }
+
+      const menus = await menuService.get(userId);
+
+      return res.json(menus);
     } catch (error) {
       next(error);
     }

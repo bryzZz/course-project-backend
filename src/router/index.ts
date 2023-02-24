@@ -1,7 +1,11 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import { isAuthenticated } from "../middlewares";
-import { userController, menuController } from "../controllers";
+import {
+  userController,
+  menuController,
+  blockController,
+} from "../controllers";
 
 const router = Router();
 
@@ -24,5 +28,14 @@ router.post(
 );
 router.get("/menus", isAuthenticated, menuController.get);
 router.delete("/menus", isAuthenticated, menuController.delete);
+
+router.post(
+  "/blocks",
+  isAuthenticated,
+  body("menuId").isString(),
+  body("text").isString(),
+  blockController.create
+);
+router.get("/blocks", isAuthenticated, blockController.get);
 
 export default router;

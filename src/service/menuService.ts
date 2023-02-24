@@ -2,7 +2,7 @@ import prisma from "../utils/prisma";
 import { imagesService } from "./imagesService";
 
 class MenuService {
-  async createMenu(
+  async create(
     userId: string,
     title: string,
     description?: string,
@@ -25,20 +25,16 @@ class MenuService {
     return menu;
   }
 
-  async get(userId: string) {
-    const menus = await prisma.menu.findMany({
-      where: { userId },
-    });
+  async get(userId: string, menuId?: string) {
+    if (menuId) {
+      return await prisma.menu.findUnique({ where: { id: menuId } });
+    }
 
-    return menus;
+    return await prisma.menu.findMany({ where: { userId } });
   }
 
   async delete(id: string) {
-    const menu = await prisma.menu.delete({
-      where: { id },
-    });
-
-    return menu;
+    return await prisma.menu.delete({ where: { id } });
   }
 }
 
