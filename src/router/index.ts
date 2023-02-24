@@ -23,5 +23,6 @@ router.post(
   menuController.create
 );
 router.get("/menus", isAuthenticated, menuController.get);
+router.delete("/menus", isAuthenticated, menuController.delete);
 
 export default router;

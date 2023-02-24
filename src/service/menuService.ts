@@ -32,6 +32,14 @@ class MenuService {
 
     return menus;
   }
+
+  async delete(id: string) {
+    const menu = await prisma.menu.delete({
+      where: { id },
+    });
+
+    return menu;
+  }
 }
 
 export const menuService = new MenuService();

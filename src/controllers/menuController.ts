@@ -38,6 +38,22 @@ class MenuController {
       next(error);
     }
   }
+
+  async delete(req: RequestWithUser, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.query;
+
+      if (typeof id !== "string") {
+        throw ApiError.BadRequest("bla");
+      }
+
+      const menu = await menuService.delete(id);
+
+      res.json(menu);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const menuController = new MenuController();
