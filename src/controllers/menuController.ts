@@ -1,5 +1,5 @@
 import { ApiError } from "../exceptions/ApiError";
-import { Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 
 import { menuService } from "../service/menuService";
@@ -59,6 +59,22 @@ class MenuController {
       const menu = await menuService.delete(id);
 
       res.json(menu);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getPublic(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.query;
+
+      if (id && typeof id === "string") {
+        const menu = await menuService.getWithBlocks(id);
+
+        return res.json(menu);
+      }
+
+      throw new Error("boo");
     } catch (error) {
       next(error);
     }

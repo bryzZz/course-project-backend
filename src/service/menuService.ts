@@ -33,6 +33,19 @@ class MenuService {
     return await prisma.menu.findMany({ where: { userId } });
   }
 
+  async getWithBlocks(menuId: string) {
+    return await prisma.menu.findUnique({
+      where: { id: menuId },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        imageUrl: true,
+        Blocks: true,
+      },
+    });
+  }
+
   async delete(id: string) {
     return await prisma.menu.delete({ where: { id } });
   }

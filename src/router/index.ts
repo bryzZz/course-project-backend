@@ -38,4 +38,6 @@ router.post(
 );
 router.get("/blocks", isAuthenticated, blockController.get);
 
+router.get("/menus-public", menuController.getPublic);
+
 export default router;
