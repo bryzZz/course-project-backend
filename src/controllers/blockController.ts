@@ -35,6 +35,18 @@ class BlockController {
       next(error);
     }
   }
+
+  async update(req: RequestWithUser, res: Response, next: NextFunction) {
+    try {
+      const { updates } = req.body;
+
+      const blocks = await blockService.update(updates as any);
+
+      return res.json(blocks);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const blockController = new BlockController();

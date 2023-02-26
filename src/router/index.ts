@@ -37,6 +37,7 @@ router.post(
   blockController.create
 );
 router.get("/blocks", isAuthenticated, blockController.get);
+router.put("/blocks", isAuthenticated, blockController.update);
 
 router.get("/menus-public", menuController.getPublic);
 
