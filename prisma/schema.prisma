@@ -35,7 +35,8 @@ model RefreshToken {
 model Menu {
   id          String   @id @unique @default(uuid())
   title       String
-  description String   @default("")
+  description String?
+  footer      String?
   imageUrl    String?
   Blocks      Block[]
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)

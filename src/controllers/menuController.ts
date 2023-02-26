@@ -14,12 +14,13 @@ class MenuController {
         return next(ApiError.BadRequest("Validation error", errors.array()));
       }
 
-      const { title, description, image } = req.body;
+      const { title, description, footer, image } = req.body;
 
       const menu = await menuService.create(
         req.user?.id as string,
         title,
-        description,
+        description || undefined,
+        footer || undefined,
         image
       );
 

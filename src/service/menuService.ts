@@ -6,12 +6,14 @@ class MenuService {
     userId: string,
     title: string,
     description?: string,
+    footer?: string,
     image?: string
   ) {
     const data: any = {
       userId,
       title,
       description,
+      footer,
     };
 
     if (image) {
@@ -40,6 +42,7 @@ class MenuService {
         id: true,
         title: true,
         description: true,
+        footer: true,
         imageUrl: true,
         Blocks: true,
       },
