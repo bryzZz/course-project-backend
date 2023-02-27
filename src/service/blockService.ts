@@ -1,4 +1,5 @@
 import { Block } from "@prisma/client";
+import { BlocksPatch } from "types";
 import prisma from "../utils/prisma";
 import { imagesService } from "./imagesService";
 
@@ -35,17 +36,22 @@ class BlockService {
     });
   }
 
-  async update(updates: Partial<Block>[]) {
-    console.log("updates", updates);
+  async update(updates: BlocksPatch) {
+    for (const id in updates) {
+      await prisma.block.update({
+        where: { id },
+        data: updates[id],
+      });
+    }
 
-    updates.forEach(async (value) => {
-      if (value.id) {
-        await prisma.block.update({
-          where: { id: value.id },
-          data: value,
-        });
-      }
-    });
+    // updates.forEach(async (value) => {
+    //   if (value.id) {
+    //     await prisma.block.update({
+    //       where: { id: value.id },
+    //       data: value,
+    //     });
+    //   }
+    // });
 
     // const ids = updates.map(({ id }) => id as string);
 

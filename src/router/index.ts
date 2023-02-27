@@ -28,6 +28,7 @@ router.post(
 );
 router.get("/menus", isAuthenticated, menuController.get);
 router.delete("/menus", isAuthenticated, menuController.delete);
+router.put("/menus", isAuthenticated, menuController.update);
 
 router.post(
   "/blocks",

@@ -1,3 +1,4 @@
+import { MenusPatch } from "types";
 import prisma from "../utils/prisma";
 import { imagesService } from "./imagesService";
 
@@ -44,6 +45,7 @@ class MenuService {
         description: true,
         footer: true,
         imageUrl: true,
+        isPublished: true,
         Blocks: true,
       },
     });
@@ -51,6 +53,15 @@ class MenuService {
 
   async delete(id: string) {
     return await prisma.menu.delete({ where: { id } });
+  }
+
+  async update(updates: MenusPatch) {
+    for (const id in updates) {
+      await prisma.menu.update({
+        where: { id },
+        data: updates[id],
+      });
+    }
   }
 }
 

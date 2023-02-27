@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 
 import { menuService } from "../service/menuService";
-import { RequestWithUser } from "../types";
+import { MenusPatch, RequestWithUser } from "../types";
 
 class MenuController {
   async create(req: RequestWithUser, res: Response, next: NextFunction) {
@@ -65,12 +65,28 @@ class MenuController {
     }
   }
 
+  async update(req: RequestWithUser, res: Response, next: NextFunction) {
+    try {
+      const { updates } = req.body;
+
+      const blocks = await menuService.update(updates as MenusPatch);
+
+      return res.json(blocks);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getPublic(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.query;
 
       if (id && typeof id === "string") {
         const menu = await menuService.getWithBlocks(id);
+
+        if (!menu?.isPublished) {
+          throw new Error("Not found");
+        }
 
         return res.json(menu);
       }

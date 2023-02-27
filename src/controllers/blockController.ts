@@ -3,7 +3,7 @@ import { Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 
 import { blockService } from "../service/blockService";
-import { RequestWithUser } from "../types";
+import { BlocksPatch, RequestWithUser } from "../types";
 
 class BlockController {
   async create(req: RequestWithUser, res: Response, next: NextFunction) {
@@ -40,7 +40,7 @@ class BlockController {
     try {
       const { updates } = req.body;
 
-      const blocks = await blockService.update(updates as any);
+      const blocks = await blockService.update(updates as BlocksPatch);
 
       return res.json(blocks);
     } catch (error) {

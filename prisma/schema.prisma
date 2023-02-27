@@ -39,6 +39,7 @@ model Menu {
   footer      String?
   imageUrl    String?
   Blocks      Block[]
+  isPublished Boolean  @default(true)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   createdAt   DateTime @default(now())
