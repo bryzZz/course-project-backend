@@ -33,7 +33,10 @@ class MenuService {
       return await prisma.menu.findUnique({ where: { id: menuId } });
     }
 
-    return await prisma.menu.findMany({ where: { userId } });
+    return await prisma.menu.findMany({
+      where: { userId },
+      orderBy: { createdAt: "asc" },
+    });
   }
 
   async getWithBlocks(menuId: string) {
