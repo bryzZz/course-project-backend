@@ -14,11 +14,28 @@ class BlockController {
         return next(ApiError.BadRequest("Validation error", errors.array()));
       }
 
-      const { menuId, text, image } = req.body;
+      const { menuId, type } = req.body;
 
-      const block = await blockService.create(menuId, text, image);
+      if (type === "DISH") {
+        const { name, image, description } = req.body.data;
 
-      res.json(block);
+        const block = await blockService.createDish(
+          menuId,
+          name,
+          image,
+          description
+        );
+
+        return res.json(block);
+      }
+
+      if (type === "SEPARATOR") {
+        const { text } = req.body.data;
+
+        const block = await blockService.createSeparator(menuId, text);
+
+        return res.json(block);
+      }
     } catch (error) {
       next(error);
     }

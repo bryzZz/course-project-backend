@@ -47,12 +47,34 @@ model Menu {
 }
 
 model Block {
-  id        String   @id @unique @default(uuid())
+  id        String     @id @unique @default(uuid())
   place     Int
-  imageUrl  String?
-  text      String
-  menu      Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  type      BlockType
+  Dish      Dish?
+  Separator Separator?
+  menu      Menu       @relation(fields: [menuId], references: [id], onDelete: Cascade)
   menuId    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Dish {
+  id          String @id @unique @default(uuid())
+  imageUrl    String
+  name        String
+  description String @db.Text
+  block       Block  @relation(fields: [blockId], references: [id], onDelete: Cascade)
+  blockId     String @unique
+}
+
+model Separator {
+  id      String  @id @unique @default(uuid())
+  text    String?
+  block   Block   @relation(fields: [blockId], references: [id], onDelete: Cascade)
+  blockId String  @unique
+}
+
+enum BlockType {
+  DISH
+  SEPARATOR
 }

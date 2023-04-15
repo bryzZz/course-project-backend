@@ -16,6 +16,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
+// app.use(cors({ origin: "*" }));
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 

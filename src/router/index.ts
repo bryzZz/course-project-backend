@@ -34,7 +34,6 @@ router.post(
   "/blocks",
   isAuthenticated,
   body("menuId").isString(),
-  body("text").isString(),
   blockController.create
 );
 router.get("/blocks", isAuthenticated, blockController.get);
