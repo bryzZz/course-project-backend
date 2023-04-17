@@ -1,6 +1,7 @@
 import { MenusPatch } from "types";
 import prisma from "../utils/prisma";
 import { imagesService } from "./imagesService";
+import { blockService } from "./blockService";
 
 class MenuService {
   async create(
@@ -40,18 +41,11 @@ class MenuService {
   }
 
   async getWithBlocks(menuId: string) {
-    return await prisma.menu.findUnique({
-      where: { id: menuId },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        footer: true,
-        imageUrl: true,
-        isPublished: true,
-        Blocks: true,
-      },
-    });
+    const menu = await prisma.menu.findUnique({ where: { id: menuId } });
+
+    const blocks = await blockService.get(menuId);
+
+    return menu ? Object.assign(menu, { blocks }) : null;
   }
 
   async delete(id: string) {
