@@ -11,5 +11,5 @@ export interface MenusPatch {
 }
 
 export interface BlocksPatch {
-  [id: string]: Partial<Pick<Block, "imageUrl" | "place" | "text">>;
+  [id: string]: Partial<Pick<Block, "place">>;
 }
