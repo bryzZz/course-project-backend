@@ -14,13 +14,15 @@ class BlockController {
         return next(ApiError.BadRequest("Validation error", errors.array()));
       }
 
-      const { menuId, type } = req.body;
+      const { menuId, type, id: blockId } = req.body;
 
       if (type === "DISH") {
-        const { name, image, description } = req.body.data;
+        const { name, image, description, id: dataId } = req.body.data;
 
         const block = await blockService.createDish(
           menuId,
+          blockId,
+          dataId,
           name,
           image,
           description
@@ -30,9 +32,14 @@ class BlockController {
       }
 
       if (type === "SEPARATOR") {
-        const { text } = req.body.data;
+        const { text, id: dataId } = req.body.data;
 
-        const block = await blockService.createSeparator(menuId, text);
+        const block = await blockService.createSeparator(
+          menuId,
+          blockId,
+          dataId,
+          text
+        );
 
         return res.json(block);
       }

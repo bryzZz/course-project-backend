@@ -19,8 +19,8 @@ class MenuController {
       const menu = await menuService.create(
         req.user?.id as string,
         title,
-        description || undefined,
-        footer || undefined,
+        description,
+        footer,
         image
       );
 

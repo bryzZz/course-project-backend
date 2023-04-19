@@ -6,6 +6,8 @@ import { imagesService } from "./imagesService";
 class BlockService {
   async createDish(
     menuId: string,
+    blockId: string,
+    dataId: string,
     name: string,
     image: string,
     description: string
@@ -24,11 +26,12 @@ class BlockService {
 
     const block = await prisma.block.create({
       data: {
+        id: blockId,
         menuId,
         place: (max._max.place ?? -1) + 1,
         type: "DISH",
         Dish: {
-          create: { imageUrl, name, description },
+          create: { id: dataId, imageUrl, name, description },
         },
       },
     });
@@ -38,7 +41,12 @@ class BlockService {
     return Object.assign(block, { data: dish });
   }
 
-  async createSeparator(menuId: string, text: string) {
+  async createSeparator(
+    menuId: string,
+    blockId: string,
+    dataId: string,
+    text: string
+  ) {
     const max = await prisma.block.aggregate({
       where: { menuId },
       _max: {
@@ -48,11 +56,12 @@ class BlockService {
 
     const block = await prisma.block.create({
       data: {
+        id: blockId,
         menuId,
         place: (max._max.place ?? -1) + 1,
         type: "SEPARATOR",
         Separator: {
-          create: { text },
+          create: { id: dataId, text },
         },
       },
     });
