@@ -7,7 +7,9 @@ export interface RequestWithUser extends Request {
 }
 
 export interface MenusPatch {
-  [id: string]: Partial<Pick<Menu, "title" | "description" | "footer">>;
+  [id: string]: Partial<
+    Pick<Menu, "title" | "description" | "footer" | "imageUrl">
+  >;
 }
 
 export interface BlocksPatch {

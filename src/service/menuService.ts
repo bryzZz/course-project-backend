@@ -54,6 +54,22 @@ class MenuService {
 
   async update(updates: MenusPatch) {
     for (const id in updates) {
+      if (updates[id]?.imageUrl) {
+        const menu = await prisma.menu.findUnique({
+          where: { id },
+          select: { title: true },
+        });
+
+        if (!menu) return;
+
+        const imageUrl = await imagesService.upload(
+          updates[id].imageUrl as string,
+          `${menu.title}-avatar`
+        );
+
+        updates[id].imageUrl = imageUrl;
+      }
+
       await prisma.menu.update({
         where: { id },
         data: updates[id],
