@@ -16,10 +16,10 @@ class BlockController {
 
       const { menuId, type, id: blockId } = req.body;
 
-      if (type === "DISH") {
+      if (type === "Dish") {
         const { name, image, description, id: dataId } = req.body.data;
 
-        const block = await blockService.createDish(
+        const block = await blockService.upsertDish(
           menuId,
           blockId,
           dataId,
@@ -31,10 +31,10 @@ class BlockController {
         return res.json(block);
       }
 
-      if (type === "SEPARATOR") {
+      if (type === "Separator") {
         const { text, id: dataId } = req.body.data;
 
-        const block = await blockService.createSeparator(
+        const block = await blockService.upsertSeparator(
           menuId,
           blockId,
           dataId,

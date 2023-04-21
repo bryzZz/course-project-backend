@@ -21,7 +21,7 @@ class MenuService {
     if (image) {
       const imageUrl = await imagesService.upload(image, `${title}-avatar`);
 
-      data["imageUrl"] = imageUrl;
+      data["image"] = imageUrl;
     }
 
     const menu = await prisma.menu.create({ data });
@@ -54,7 +54,7 @@ class MenuService {
 
   async update(updates: MenusPatch) {
     for (const id in updates) {
-      if (updates[id]?.imageUrl) {
+      if (updates[id]?.image) {
         const menu = await prisma.menu.findUnique({
           where: { id },
           select: { title: true },
@@ -63,11 +63,11 @@ class MenuService {
         if (!menu) return;
 
         const imageUrl = await imagesService.upload(
-          updates[id].imageUrl as string,
+          updates[id].image as string,
           `${menu.title}-avatar`
         );
 
-        updates[id].imageUrl = imageUrl;
+        updates[id].image = imageUrl;
       }
 
       await prisma.menu.update({

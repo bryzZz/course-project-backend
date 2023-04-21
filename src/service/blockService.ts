@@ -4,7 +4,7 @@ import prisma from "../utils/prisma";
 import { imagesService } from "./imagesService";
 
 class BlockService {
-  async createDish(
+  async upsertDish(
     menuId: string,
     blockId: string,
     dataId: string,
@@ -19,19 +19,26 @@ class BlockService {
       },
     });
 
-    const imageUrl = (await imagesService.upload(
-      image,
-      `${name}-avatar`
-    )) as string;
+    const imageUrl = await imagesService.upload(image, `${name}-avatar`);
 
-    const block = await prisma.block.create({
-      data: {
+    const block = await prisma.block.upsert({
+      where: { id: blockId },
+      create: {
         id: blockId,
         menuId,
         place: (max._max.place ?? -1) + 1,
-        type: "DISH",
+        type: "Dish",
         Dish: {
-          create: { id: dataId, imageUrl, name, description },
+          create: { id: dataId, image: imageUrl as string, name, description },
+        },
+      },
+      update: {
+        Dish: {
+          update: {
+            image: imageUrl as string,
+            name,
+            description,
+          },
         },
       },
     });
@@ -41,7 +48,7 @@ class BlockService {
     return Object.assign(block, { data: dish });
   }
 
-  async createSeparator(
+  async upsertSeparator(
     menuId: string,
     blockId: string,
     dataId: string,
@@ -54,14 +61,22 @@ class BlockService {
       },
     });
 
-    const block = await prisma.block.create({
-      data: {
+    const block = await prisma.block.upsert({
+      where: { id: blockId },
+      create: {
         id: blockId,
         menuId,
         place: (max._max.place ?? -1) + 1,
-        type: "SEPARATOR",
+        type: "Separator",
         Separator: {
           create: { id: dataId, text },
+        },
+      },
+      update: {
+        Separator: {
+          update: {
+            text,
+          },
         },
       },
     });

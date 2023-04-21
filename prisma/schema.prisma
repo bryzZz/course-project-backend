@@ -37,7 +37,7 @@ model Menu {
   title       String
   description String?
   footer      String?
-  imageUrl    String?
+  image       String?
   Blocks      Block[]
   isPublished Boolean  @default(true)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -60,7 +60,7 @@ model Block {
 
 model Dish {
   id          String @id @unique @default(uuid())
-  imageUrl    String
+  image       String
   name        String
   description String @db.Text
   block       Block  @relation(fields: [blockId], references: [id], onDelete: Cascade)
@@ -75,6 +75,6 @@ model Separator {
 }
 
 enum BlockType {
-  DISH
-  SEPARATOR
+  Dish
+  Separator
 }
