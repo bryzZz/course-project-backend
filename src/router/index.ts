@@ -38,6 +38,7 @@ router.post(
 );
 router.get("/blocks", isAuthenticated, blockController.get);
 router.put("/blocks", isAuthenticated, blockController.update);
+router.delete("/blocks", isAuthenticated, blockController.delete);
 
 router.get("/menus-public", menuController.getPublic);
 

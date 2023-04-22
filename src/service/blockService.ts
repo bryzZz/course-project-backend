@@ -133,6 +133,10 @@ class BlockService {
       });
     }
   }
+
+  async delete(id: string) {
+    return await prisma.block.delete({ where: { id } });
+  }
 }
 
 export const blockService = new BlockService();

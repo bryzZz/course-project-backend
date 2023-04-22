@@ -71,6 +71,22 @@ class BlockController {
       next(error);
     }
   }
+
+  async delete(req: RequestWithUser, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.query;
+
+      if (typeof id !== "string") {
+        throw ApiError.BadRequest("bla");
+      }
+
+      const block = await blockService.delete(id);
+
+      res.json(block);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const blockController = new BlockController();
